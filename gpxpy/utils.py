@@ -78,8 +78,9 @@ def make_str(s: AnyStr) -> str:
     """ Convert a str or unicode or float object into a str type. """
     if isinstance(s, float):
         result = str(s)
-        if not 'e' in result:
+        if 'e' not in result:
             return result
-        # scientific notation is illegal in GPX 1/1
-        return format(s, '.10f').rstrip('0.')
+        # Scientific notation is illegal in GPX 1/1.
+        result = format(s, '.10f').rstrip('0')
+        return result + '0' if result.endswith('.', -1) else result
     return str(s)
